@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Book List</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <!-- Subfolder se navbar include karte waqt path mein '../' dena padta hai -->
+  <%- include('../navbar') %>
+
+  <div style="padding: 20px;">
+    <h1>Registered Books</h1>
+    <ul>
+      <% books.forEach(book => { %>
+        <li><strong><%= book.title %></strong> - <%= book.author %></li>
+      <% }) %>
+    </ul>
+  </div>
+
+  <%- include('../footer') %>
+</body>
+</html>

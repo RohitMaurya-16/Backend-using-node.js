@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= prdn.name %> - Details</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <!-- Navbar Include -->
+    <!-- <%- include('../navbar') %> --> 
+
+    <div class="container">
+        <div class="detail-box">
+            <h1><%= prdn.name %></h1>
+            <p class="price">Price: ₹<%= prdn.price %></p>
+            <p><strong>Description:</strong> <%= prdn.description %></p>
+            
+            <a href="/products" class="back-link">&larr; Back to Product List</a>
+        </div>
+    </div>
+
+    <!-- Footer Include -->
+    <%- include('../footer') %>
+</body>
+</html>

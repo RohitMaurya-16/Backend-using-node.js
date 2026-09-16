@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Picsum Gallery App</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header>
+        <h1>Picsum Photo Gallery</h1>
+        <p>Powered by Node.js, Pagination, and Vanilla JavaScript</p>
+    </header>
+
+    <main>
+        <div id="gallery" class="gallery-grid"></div>
+        <div class="load-more-container">
+            <button id="loadMoreBtn" onclick="loadImages()">Load More Images</button>
+        </div>
+    </main>
+
+    <script>
+        // This variable keeps track of which page of images we are loading.
+        let currentPage = 1;
+        // This constant controls how many images are fetched in one request.
+        const limit = 20;
+
+        // This function fetches and renders a batch of image cards.
+        async function loadImages() {
+            // Get the gallery container and the button from the HTML page.
+            const galleryEl = document.getElementById('gallery');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+
+            // Tell the user that the app is currently loading images.
+            loadMoreBtn.textContent = 'Loading...';
+            // Disable the button so the user cannot click repeatedly while loading.
+            loadMoreBtn.disabled = true;
+
+            try {
+                // Fetch the image JSON from our local Node API route.
+                const response = await fetch(`/api/images?page=${currentPage}&limit=${limit}`);
+
+                // If the server did not respond successfully, stop and show an error.
+                if (!response.ok) {
+                    throw new Error(`Server responded with ${response.status}`);
+                }
+
+                // Convert the JSON response into JavaScript data.
+                const images = await response.json();
+
+                // If there are no more images, tell the user and stop.
+                if (!Array.isArray(images) || images.length === 0) {
+                    loadMoreBtn.textContent = 'No more images available';
+                    return;
+                }
+
+                // Loop through each image object and create a card for it.
+                images.forEach(img => {
+                    // Create a new div wrapper for one image card.
+                    const card = document.createElement('div');
+                    // Give it a CSS class so the styling is applied.
+                    card.className = 'image-card';
+
+                    // Build the HTML for the card using the image data.
+                    card.innerHTML = `
+                        <img src="${img.imageUrl}" alt="Photo by ${img.author}" loading="lazy">
+                        <div class="card-info">
+                            <h3>${img.author}</h3>
+                            <a href="${img.url}" target="_blank" rel="noopener">Original Link</a>
+                        </div>
+                    `;
+                    // Add the finished card to the gallery container.
+                    galleryEl.appendChild(card);
+                });
+
+                // Move to the next page so the next batch loads correctly.
+                currentPage++;
+                // Restore the button text after a successful load.
+                loadMoreBtn.textContent = 'Load More Images';
+                // Re-enable the button so the user can request more images.
+                loadMoreBtn.disabled = false;
+            } catch (err) {
+                // If anything goes wrong, display a clear message to the user.
+                loadMoreBtn.textContent = 'Error loading images';
+                // Print the real error in the console for debugging.
+                console.error('Image load failed:', err);
+            }
+        }
+
+        // Run the first image load as soon as the page opens.
+        loadImages();
+    </script>
+</body>
+</html>

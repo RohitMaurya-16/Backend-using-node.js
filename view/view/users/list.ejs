@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User List</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <!-- Subfolder se navbar include karte waqt path mein '../' dena padta hai -->
+  <%- include('../navbar') %>
+
+  <div style="padding: 20px;">
+    <h1>Registered Users</h1>
+    <ul>
+      <% users.forEach(user => { %>
+        <li><strong><%= user.name %></strong> - <%= user.role %></li>
+      <% }) %>
+    </ul>
+  </div>
+
+  <%- include('../footer') %>
+</body>
+</html>

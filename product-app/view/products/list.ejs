@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <!-- Navbar Include -->
+    <%- include('../navbar') %>
+
+    <div class="container">
+        <h1>Explore Our Products</h1>
+
+        <form class="search-form" action="/products" method="get">
+            <label for="search">Search products</label>
+            <div class="search-row">
+                <input id="search" name="search" type="search" value="<%= search %>" placeholder="Try laptop or camera">
+                <button class="btn" type="submit">Search</button>
+            </div>
+        </form>
+
+        <% if (prd.length === 0) { %>
+            <p class="empty-state">No products matched your search.</p>
+        <% } %>
+        
+        <div class="product-grid">
+            <% prd.forEach(product => { %>
+                <div class="product-card">
+                    <div>
+                        <h3><%= product.name %></h3>
+                        <p class="price">₹<%= product.price %></p>
+                    </div>
+                    <!-- Detail page link as requested -->
+                    <a href="/products/<%= product.id %>" class="btn">View Details</a>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <!-- Footer Include -->
+    <%- include('../footer') %>
+</body>
+</html>

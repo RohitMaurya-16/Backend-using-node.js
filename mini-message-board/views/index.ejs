@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+  <title><%= title %></title>
+</head>
+<body>
+  <main>
+    <header class="board-header">
+      <h1><%= title %></h1>
+      <a class="button" href="/new">Add a message</a>
+    </header>
+
+  <ul class="message-list">
+    <% messages.forEach((message, index) => { %>
+      <li class="message-card">
+        <strong><%= message.user %></strong>
+        <p><%= message.text %></p>
+        <span class="meta"><%= message.added.toLocaleString() %></span>
+        <a href="/message/<%= index %>">Read message</a>
+      </li>
+    <% }) %>
+  </ul>
+  </main>
+</body>
+</html>
