@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <%- include('../partials/navbar') %>
+    <main class="container">
+      <section class="panel">
+        <div class="panel-header">
+          <h1>Categories</h1>
+          <a href="/categories/create" class="btn">Create category</a>
+        </div>
+
+        <ul class="list">
+          <% categories.forEach((category) => { %>
+            <li>
+              <a href="/categories/<%= category.id %>"><%= category.name %></a>
+              <span><%= category.item_count %> items</span>
+            </li>
+          <% }) %>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

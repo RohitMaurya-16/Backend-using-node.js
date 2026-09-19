@@ -1,0 +1,35 @@
+<form action="<%= formAction %>" method="POST" class="application-form">
+  <section class="form-section">
+    <div class="form-section-heading"><span class="section-number">01</span><div><h2>Role details</h2><p>Identify the opportunity so it is easy to recognize later.</p></div></div>
+    <div class="field-row"><div class="field"><label for="companyName">Company name <b>*</b></label><input type="text" name="companyName" id="companyName" value="<%= application.companyName || '' %>" placeholder="e.g. Razorpay" required></div><div class="field"><label for="jobTitle">Job title / role <b>*</b></label><input type="text" name="jobTitle" id="jobTitle" value="<%= application.jobTitle || '' %>" placeholder="e.g. Software Engineer" required></div></div>
+    <div class="field-row"><div class="field"><label for="jobId">Job ID / reference number</label><input type="text" name="jobId" id="jobId" value="<%= application.jobId || '' %>" placeholder="e.g. SE-2026-014"></div><div class="field"><label for="jdLink">Job description link</label><input type="url" name="jdLink" id="jdLink" value="<%= application.jdLink || '' %>" placeholder="https://company.com/careers/job"></div></div>
+    <div class="field-row"><div class="field"><label for="location">Location / city</label><input type="text" name="location" id="location" value="<%= application.location || '' %>" placeholder="e.g. Bengaluru"></div><div class="field"><label for="workMode">Work mode</label><select name="workMode" id="workMode"><option value="">Choose one</option><% ["Remote", "Hybrid", "On-site"].forEach(mode => { %><option value="<%= mode %>" <%= application.workMode === mode ? "selected" : "" %>><%= mode %></option><% }); %></select></div></div>
+  </section>
+
+  <section class="form-section">
+    <div class="form-section-heading"><span class="section-number">02</span><div><h2>Application logistics</h2><p>Keep the submission details and resume version together.</p></div></div>
+    <div class="field-row"><div class="field"><label for="dateApplied">Date applied <b>*</b></label><input type="date" name="dateApplied" id="dateApplied" value="<%= application.dateApplied || '' %>" required></div><div class="field"><label for="platform">Platform used</label><input type="text" name="platform" id="platform" value="<%= application.platform || '' %>" placeholder="LinkedIn, referral, company site..."></div></div>
+    <div class="field"><label for="resumeVersion">Resume version used</label><input type="text" name="resumeVersion" id="resumeVersion" value="<%= application.resumeVersion || '' %>" placeholder="e.g. Resume_Software_Dev_v2.pdf"></div>
+  </section>
+
+  <section class="form-section">
+    <div class="form-section-heading"><span class="section-number">03</span><div><h2>Status and next steps</h2><p>Know where each application stands and what needs your attention.</p></div></div>
+    <div class="field-row"><div class="field"><label for="status">Current status <b>*</b></label><select name="status" id="status" required><% statuses.forEach(status => { %><option value="<%= status %>" <%= (application.status || "Applied") === status ? "selected" : "" %>><%= status %></option><% }); %></select></div><div class="field"><label for="followUpDate">Follow-up date</label><input type="date" name="followUpDate" id="followUpDate" value="<%= application.followUpDate || '' %>"></div></div>
+    <div class="field"><label for="nextSteps">Next steps / action items</label><textarea name="nextSteps" id="nextSteps" rows="3" placeholder="Complete HackerRank test by Friday..."><%= application.nextSteps || '' %></textarea></div>
+  </section>
+
+  <section class="form-section">
+    <div class="form-section-heading"><span class="section-number">04</span><div><h2>Contact and interview</h2><p>Keep useful contact and meeting details close by.</p></div></div>
+    <div class="field-row"><div class="field"><label for="recruiterName">Recruiter / HR name</label><input type="text" name="recruiterName" id="recruiterName" value="<%= application.recruiterName || '' %>" placeholder="e.g. Priya Sharma"></div><div class="field"><label for="contactEmail">Contact email</label><input type="email" name="contactEmail" id="contactEmail" value="<%= application.contactEmail || '' %>" placeholder="recruiter@company.com"></div></div>
+    <div class="field-row"><div class="field"><label for="contactPhone">Contact phone</label><input type="tel" name="contactPhone" id="contactPhone" value="<%= application.contactPhone || '' %>" placeholder="+91 98765 43210"></div><div class="field"><label for="meetingLink">Meeting link</label><input type="url" name="meetingLink" id="meetingLink" value="<%= application.meetingLink || '' %>" placeholder="Google Meet, Zoom, Teams..."></div></div>
+    <div class="field-row"><div class="field"><label for="interviewDate">Next interview date</label><input type="date" name="interviewDate" id="interviewDate" value="<%= application.interviewDate || '' %>"></div><div class="field"><label for="interviewTime">Interview time</label><input type="time" name="interviewTime" id="interviewTime" value="<%= application.interviewTime || '' %>"></div></div>
+  </section>
+
+  <section class="form-section">
+    <div class="form-section-heading"><span class="section-number">05</span><div><h2>Offer and notes</h2><p>Save salary details, feedback, and questions for later.</p></div></div>
+    <div class="field"><label for="salary">Salary / CTC offered</label><input type="text" name="salary" id="salary" value="<%= application.salary || '' %>" placeholder="e.g. 12 LPA or To be discussed"></div>
+    <div class="field"><label for="notes">Notes / feedback</label><textarea name="notes" id="notes" rows="5" placeholder="Technical questions, interview feedback, or anything worth remembering..."><%= application.notes || '' %></textarea></div>
+  </section>
+
+  <div class="form-actions"><a class="text-link" href="/">Cancel</a><button class="button" type="submit"><%= isEdit ? "Save changes" : "Save application" %> <span aria-hidden="true">↗</span></button></div>
+</form>

@@ -1,0 +1,10 @@
+<% if (locals.errors) { %>
+  <div class="error-panel" role="alert">
+    <strong>Check the highlighted details</strong>
+    <ul>
+    <% errors.forEach(function(error) { %>
+      <li><%= error.msg %></li>
+    <% }); %>
+    </ul>
+  </div>
+<% } %>

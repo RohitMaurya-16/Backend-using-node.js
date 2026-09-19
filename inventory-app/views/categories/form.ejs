@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <%- include('../partials/navbar') %>
+    <main class="container">
+      <section class="panel">
+        <h1><%= title %></h1>
+
+        <% if (errors && errors.length > 0) { %>
+          <ul class="error-list">
+            <% errors.forEach((error) => { %>
+              <li><%= error.msg %></li>
+            <% }) %>
+          </ul>
+        <% } %>
+
+        <form method="POST" action="<%= action %>">
+          <div class="form-grid">
+            <div class="field">
+              <label for="name">Category name</label>
+              <input id="name" name="name" type="text" value="<%= category ? category.name : '' %>" required />
+            </div>
+
+            <div class="field">
+              <label for="description">Description</label>
+              <textarea id="description" name="description"><%= category ? category.description || '' : '' %></textarea>
+            </div>
+
+            <% if (action.includes('/update')) { %>
+              <div class="field">
+                <label for="adminPassword">Admin password</label>
+                <input id="adminPassword" name="adminPassword" type="password" placeholder="Enter admin password" required />
+              </div>
+            <% } %>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn"><%= title %></button>
+            <a href="/categories" class="btn">Cancel</a>
+          </div>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

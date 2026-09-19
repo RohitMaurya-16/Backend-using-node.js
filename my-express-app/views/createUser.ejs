@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title><%= title %> | Applylog</title><link rel="stylesheet" href="/styles.css"></head>
+<body><div class="page-shell"><header class="site-header"><a class="brand" href="/" aria-label="Applylog home"><span class="brand-mark">A</span><span>Applylog</span></a><nav class="main-nav" aria-label="Main navigation"><a class="nav-link" href="/">Applications</a><a class="nav-link" href="/search">Search</a></nav></header>
+<main class="form-page"><div class="form-intro"><p class="eyebrow">New tracker entry</p><h1>Log a <em>new opportunity.</em></h1><p>Capture the details while they are fresh, then keep your next step visible.</p></div><section class="form-card" aria-labelledby="application-form-heading"><h2 id="application-form-heading">Application details</h2><%- include("partials/errors.ejs") %><%- include("partials/applicationForm.ejs", { formAction: "/create", isEdit: false }) %></section></main>
+<footer class="site-footer"><span>Applylog</span><span>Your job search, organized locally.</span></footer></div></body>
+</html>

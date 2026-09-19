@@ -1,0 +1,29 @@
+{
+  "name": "inventory-app",
+  "version": "1.0.0",
+  "description": "Inventory management application with Express and PostgreSQL",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node --watch app.js",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down -v",
+    "db:init": "node database/init.js",
+    "db:seed": "node database/seed.js",
+    "db:reset": "npm run db:down && npm run db:up && npm run db:init && npm run db:seed"
+  },
+  "keywords": [
+    "inventory",
+    "express",
+    "postgresql",
+    "ejs"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.2",
+    "express": "^4.21.2",
+    "pg": "^8.13.0"
+  }
+}

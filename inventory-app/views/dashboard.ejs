@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <%- include('partials/navbar') %>
+    <main class="container">
+      <section class="hero">
+        <h1>Inventory Dashboard</h1>
+        <p>Track categories, stock, and product availability.</p>
+      </section>
+
+      <section class="stats-grid">
+        <div class="card">
+          <h3>Categories</h3>
+          <p><%= categories.length %></p>
+        </div>
+        <div class="card">
+          <h3>Items</h3>
+          <p><%= items.length %></p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Categories</h2>
+          <a href="/categories/create" class="btn">Add category</a>
+        </div>
+        <ul class="list">
+          <% categories.forEach((category) => { %>
+            <li>
+              <a href="/categories/<%= category.id %>"><%= category.name %></a>
+              <span><%= category.item_count %> items</span>
+            </li>
+          <% }) %>
+        </ul>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Latest items</h2>
+          <a href="/items/create" class="btn">Add item</a>
+        </div>
+        <ul class="list">
+          <% items.forEach((item) => { %>
+            <li>
+              <a href="/items/<%= item.id %>"><%= item.name %></a>
+              <span><%= item.category_name %> · Qty: <%= item.quantity %></span>
+            </li>
+          <% }) %>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A private local tracker for your job applications, interviews, follow-ups, and offers.">
+  <title><%= title %> | Applylog</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Applylog home"><span class="brand-mark">A</span><span>Applylog</span></a>
+      <nav class="main-nav" aria-label="Main navigation"><a class="nav-link active" href="/">Applications</a><a class="nav-link" href="/search">Search</a><a class="button button-small" href="/create">+ Add application</a></nav>
+    </header>
+    <main>
+      <section class="hero tracker-hero"><div><p class="eyebrow">Private job search workspace / 2026</p><h1>Keep every opportunity<br><em>within reach.</em></h1><p class="hero-copy">One calm place to track where you applied, what comes next, and the details you will want before an interview.</p><div class="hero-actions"><a class="button" href="/create">Log an application <span aria-hidden="true">↗</span></a><a class="text-link" href="/search">Search your tracker <span aria-hidden="true">→</span></a></div></div><div class="hero-note" aria-label="Local storage note"><span class="note-number">LOCAL</span><p>Your applications are stored in a local JSON file on this machine. No database or account required.</p></div></section>
+      <section class="tracker-overview" aria-label="Application overview"><div class="stat-card"><span>Total applications</span><strong><%= stats.total %></strong><small>Every role you are tracking</small></div><div class="stat-card stat-card-mint"><span>Active pipeline</span><strong><%= stats.active %></strong><small>Applied, tests, and interviews</small></div><div class="stat-card"><span>Interviews</span><strong><%= stats.interviews %></strong><small>Conversations in progress</small></div><div class="stat-card stat-card-coral"><span>Offers</span><strong><%= stats.offers %></strong><small>Offers received</small></div></section>
+      <section class="directory-section" aria-labelledby="applications-heading"><div class="section-heading"><div><p class="eyebrow">Your pipeline</p><h2 id="applications-heading">Recent applications <span class="count"><%= stats.total %></span></h2></div><a class="text-link" href="/search">Find an application <span aria-hidden="true">→</span></a></div>
+        <% if (applications && applications.length > 0) { %>
+          <div class="application-grid"><% applications.forEach(application => { %><article class="application-card"><div class="application-card-top"><span class="company-initial"><%= application.companyName.charAt(0).toUpperCase() %></span><span class="status-pill status-<%= application.status.toLowerCase().replace(/[^a-z]+/g, "-") %>"><%= application.status %></span></div><div class="application-details"><h3><%= application.jobTitle %></h3><p class="company-name"><%= application.companyName %></p><div class="application-meta"><span><%= application.location || "Location not set" %></span><span><%= application.workMode || "Mode not set" %></span></div><% if (application.dateApplied) { %><p class="applied-date">Applied <%= new Date(`${application.dateApplied}T00:00:00`).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }) %></p><% } %></div><div class="application-card-footer"><% if (application.followUpDate) { %><span class="follow-up"><span aria-hidden="true">↗</span> Follow up <%= new Date(`${application.followUpDate}T00:00:00`).toLocaleDateString("en-IN", { day: "numeric", month: "short" }) %></span><% } else { %><span class="user-id"><%= application.platform || "No platform" %></span><% } %><div class="card-actions"><a class="card-action" href="/<%= application.id %>/update">View details <span aria-hidden="true">↗</span></a><form action="/<%= application.id %>/delete" method="POST"><button class="delete-button" type="submit" onclick="return confirm('Delete this application?');">Delete</button></form></div></div></article><% }); %></div>
+        <% } else { %><div class="empty-state"><span class="empty-icon" aria-hidden="true">＋</span><h3>Your application tracker is ready.</h3><p>Start by adding the first role you applied for. Your entries will stay saved locally.</p><a class="button" href="/create">Add the first application <span aria-hidden="true">↗</span></a></div><% } %>
+      </section>
+    </main>
+    <footer class="site-footer"><span>Applylog</span><span>Your job search, organized locally.</span></footer>
+  </div>
+</body>
+</html>
