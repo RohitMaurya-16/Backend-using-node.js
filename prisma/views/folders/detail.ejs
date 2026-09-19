@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 0; background: #f4f6fb; color: #1f2937; }
+      nav { background: #111827; color: white; padding: 16px 24px; }
+      nav a { color: white; text-decoration: none; margin-right: 16px; }
+      main { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+      .file-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 18px; }
+      .file-item { background: white; padding: 18px; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.04); }
+      a { color: #2563eb; text-decoration: none; }
+      .button { display: inline-block; background: #2563eb; color: white; padding: 8px 12px; border-radius: 8px; }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="/">Dashboard</a>
+      <a href="/folders">Folders</a>
+      <a href="/files/upload">Upload</a>
+    </nav>
+    <main>
+      <h1><%= folder.name %></h1>
+      <p><%= folder.description || 'No description' %></p>
+      <a class="button" href="/files/upload?folderId=<%= folder.id %>">Upload file</a>
+
+      <h2>Files</h2>
+      <div class="file-list">
+        <% if (folder.files.length === 0) { %>
+          <p>No files in this folder yet.</p>
+        <% } else { %>
+          <% folder.files.forEach(file => { %>
+            <div class="file-item">
+              <h3><a href="/files/<%= file.id %>"><%= file.originalName %></a></h3>
+              <p><%= file.mimeType %></p>
+              <p><%= (file.size / 1024).toFixed(2) %> KB</p>
+              <p><%= new Date(file.uploadedAt).toLocaleString() %></p>
+              <a class="button" href="/files/<%= file.id %>/download">Download</a>
+            </div>
+          <% }) %>
+        <% } %>
+      </div>
+    </main>
+  </body>
+</html>

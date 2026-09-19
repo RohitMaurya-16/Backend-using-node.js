@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <style>
+      body { font-family: Arial, sans-serif; background: #f4f6fb; margin: 0; }
+      main { max-width: 800px; margin: 50px auto; background: white; border-radius: 16px; padding: 30px; box-shadow: 0 12px 30px rgba(0,0,0,0.05); }
+      .meta { display: grid; gap: 12px; }
+      a.button { display: inline-block; margin-top: 20px; background: #2563eb; color: white; padding: 10px 15px; border-radius: 8px; text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1><%= file.originalName %></h1>
+      <div class="meta">
+        <p><strong>Name:</strong> <%= file.originalName %></p>
+        <p><strong>Type:</strong> <%= file.mimeType %></p>
+        <p><strong>Size:</strong> <%= (file.size / 1024).toFixed(2) %> KB</p>
+        <p><strong>Uploaded:</strong> <%= new Date(file.uploadedAt).toLocaleString() %></p>
+        <p><strong>Folder:</strong> <%= file.folder ? file.folder.name : 'General' %></p>
+      </div>
+      <a class="button" href="/files/<%= file.id %>/download">Download file</a>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  username      String    @unique
+  email         String    @unique
+  passwordHash  String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  folders       Folder[]
+  uploads       FileRecord[]
+}
+
+model Folder {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  userId      Int
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  files       FileRecord[]
+  shareTokens ShareToken[]
+
+  @@unique([userId, name])
+}
+
+model FileRecord {
+  id          Int       @id @default(autoincrement())
+  name        String
+  originalName String
+  mimeType    String
+  size        Int
+  fileUrl     String?
+  storageMode String    @default("local")
+  uploadedAt  DateTime  @default(now())
+  userId      Int
+  folderId    Int?
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  folder      Folder?   @relation(fields: [folderId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([folderId])
+}
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
+}
+
+model ShareToken {
+  id          Int      @id @default(autoincrement())
+  token       String   @unique
+  folderId    Int
+  folder      Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+  isActive    Boolean  @default(true)
+}

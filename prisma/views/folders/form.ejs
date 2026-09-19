@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <style>
+      body { font-family: Arial, sans-serif; background: #f4f6fb; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+      .panel { background: white; padding: 32px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); width: min(500px, 90vw); }
+      input, textarea, button { width: 100%; margin-top: 12px; padding: 12px; border-radius: 8px; border:1px solid #d1d5db; box-sizing: border-box; }
+      button { background: #2563eb; color: white; border: none; cursor: pointer; }
+      .error { background: #fee2e2; color: #991b1b; padding: 12px; border-radius: 8px; margin-bottom: 16px; }
+      a { color: #2563eb; text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <div class="panel">
+      <h1><%= title %></h1>
+      <% if (error) { %>
+        <div class="error"><%= error %></div>
+      <% } %>
+
+      <% const action = folder && folder.id ? `/folders/${folder.id}?_method=PUT` : '/folders/new'; %>
+      <form method="POST" action="<%= action %>">
+        <input type="text" name="name" placeholder="Folder name" value="<%= folder ? folder.name : '' %>" required />
+        <textarea name="description" rows="4" placeholder="Description"><%= folder ? folder.description || '' : '' %></textarea>
+        <button type="submit"><%= folder && folder.id ? 'Update folder' : 'Create folder' %></button>
+      </form>
+      <p><a href="/folders">Back to folders</a></p>
+    </div>
+  </body>
+</html>
